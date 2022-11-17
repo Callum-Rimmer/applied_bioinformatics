@@ -33,3 +33,15 @@ Type the following into your terminal:
 ```bash
 git clone https://github.com/Callum-Rimmer/applied_bioinformatics.git
 ```
+This should download the repository, including all the files for today.
+
+### Using Conda
+
+The package manager we are going to use is called Conda. This should already be installed on your virtual machines.
+
+Let's check Conda is working by typing...
+```bash
+conda --version
+```
+
+#### Creating an environment
