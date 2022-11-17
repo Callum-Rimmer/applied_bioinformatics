@@ -31,4 +31,5 @@ You've previously downloaded files using GitHub. We are going to use the same me
 Type the following into your terminal:
 
 ```bash
-git clone
+git clone https://github.com/Callum-Rimmer/applied_bioinformatics.git
+```
