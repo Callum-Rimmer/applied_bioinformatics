@@ -70,9 +70,12 @@ One of the main ways we manage the vast array of programs you need to install is
 
 Each piece of software you use will have a number of required programs (called dependencies) that must be installed in order for the program to work. Dependencies from different programs can often conflict with one another, which will prevent you from running the software.
 
+![linux-package-manager-explanation copy](https://user-images.githubusercontent.com/72881801/202696960-655d33be-1e86-46f8-bd0e-c99be19e7609.jpg)
+
 Using a package manager, it will install a program along with its dependencies and place this in an 'environment'. You can have as many environments as you like, each with a different program installed in it. You activate the environment that you wish to use, and you can then use that particular program. This way you will never run into problems with different software conflicting with each other.
 
-### Using Conda
+![conda_logo](https://user-images.githubusercontent.com/72881801/202698181-ccb6bbc3-c6c9-4733-9cfe-e47f06001546.png)
+
 
 The package manager we are going to use is called Conda. This should already be installed on your virtual machines.
 
@@ -224,6 +227,14 @@ Q.  Each contig begins with a header line containing all the information about t
   a)  How can we view this file?\
   b)  How could you extract all the header lines i.e. contig names and print them to the terminal?
   
+### Species identification
+
 Now we have our assembled genome, let's find out what species of bacteria it belongs to.
 
 You can upload your fasta file to [PubMLST](https://pubmlst.org/species-id), which uses ribosomal multi-locus sequence typing for species identification.
+
+### Searching for antibiotic resistance genes
+
+We can also upload our genome to the Comprehensive antibiotic-resistance gene database [(CARD)](https://card.mcmaster.ca/analyze/rgi)
+
+Does the genome encode any antibiotic resistance genes?
