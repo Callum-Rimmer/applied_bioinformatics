@@ -21,6 +21,8 @@ nano
 rm
 ```
 
+There's a few more commands I want to cover: `cut`, `grep` and the pipe `|`
+
 ## Plan for today
 
 One of the main ways we manage the vast array of programs you need to install is with a package manager. We are going to look at one today - this is what you will be using for your assessment.
@@ -151,3 +153,27 @@ Now let's tidy things up:
 2. Make a folder called `trimmed_reads` and move your paired files from `trimmomatic` into this folder
 3. Remove the `.zip` files from fastqc
 4. Make a folder called `fastqc` and move your html files into this folder
+
+### Assembling the genome
+
+Now our read files have been quality checked and trimmed, we can assemble the reads into a complete genome.
+
+The program we are going to use to do this is called `spades`
+
+1. Create an environment called `spades`
+2. Activate the environment and install the program `spades`
+3. In your `workshop` folder, create a folder called `spades`
+
+Now we can run the main command:
+```
+spades.py -1 trimmed_reads/bacteria_R1p.fastq -2 trimmed_reads/bacteria_R2p.fastq -o spades -t 4
+```
+The `-1` flag is for your trimmed forward reads file.\
+The `-2` flag is for your trimmed reverse reads file.\
+The `-o` flag is the output folder\
+The `-t 4` flag is for using for CPU threads
+
+What we're doing is trying to piece the sequencing reads into larger fragments called contigs. The contigs then get stiched together to form the assembled genome.
+
+![image](https://user-images.githubusercontent.com/72881801/202688417-8d9fdf14-2009-4ed4-b17c-0dd48dda76df.png)
+
