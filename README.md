@@ -23,6 +23,47 @@ rm
 
 There's a few more commands I want to cover: `cut`, `grep` and the pipe `|`
 
+#### Cut
+
+We can use the `cut` command to extract text from a file or an output from a command.
+
+Lets make a list of numbers using `echo` in comma-separated values format and direct that to a file:
+```
+echo "a,b,c,d,e" > cut_example.txt
+```
+How can we print the contents of this file to the terminal?
+
+What if we only to extract the letter `c` from that file? We can use `cut` to do it.
+```bash
+cut -f3 -d',' cut_example.txt
+```
+`-f3` means we are extracting the 3rd field (column).\
+`-d','` is how we set the delimiter (what the columns are going to be separated by).
+
+So what we have said is break up the file into columns based on commas, then print the 3rd column.
+
+#### Grep
+
+The `grep` command is a pattern searcher. You supply it with some text and it will search for that text in whatever file or command output you give it.
+
+Using the file you created for the `cut` command...
+```bash
+grep a cut_example.txt
+```
+`grep` will output each line that contains a match to your query text.
+
+#### The pipe
+
+`|` is used to direct the output of one command into another.
+
+One example is counting the number of files in a directory...
+```
+ls | wc -l
+```
+`ls` will normally list the contents of a directory in the terminal.
+
+But if we pipe it into the word count command it will instead give us the number of lines the `ls` command printed i.e. the number of files/folders.
+
 ## Plan for today
 
 One of the main ways we manage the vast array of programs you need to install is with a package manager. We are going to look at one today - this is what you will be using for your assessment.
@@ -176,4 +217,5 @@ The `-t 4` flag is for using for CPU threads
 What we're doing is trying to piece the sequencing reads into larger fragments called contigs. The contigs then get stiched together to form the assembled genome.
 
 ![image](https://user-images.githubusercontent.com/72881801/202688417-8d9fdf14-2009-4ed4-b17c-0dd48dda76df.png)
+
 
