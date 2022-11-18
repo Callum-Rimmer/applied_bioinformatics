@@ -127,17 +127,27 @@ The program we are going to use is called `trimmomatic`.
 
 1. Create an environment called `trimmomatic`
 2. Activate this environment
-3. Install trimmomatic, using conda, in this environment
+3. Install `trimmomatic`, using conda, in this environment
+4. Download the `NexteraPE-PE.fa` file from NOW and place this in your `workshop` directory
 
 Trimmomatic uses a few more parameters than fastqc. The command we are going to use is:
 ```
 trimmomatic PE -threads 4 bacteria_R1.fastq bacteria_R2.fastq bacteria_R1p.fastq bacteria_R1u.fastq bacteria_R2p.fastq bacteria_R2u.fastq ILLUMINACLIP:NexteraPE-PE.fa:2:20:10
 ```
 
-`bacteria_R1.fastq` and `bacteria_R2.fastq` are your input files
+`bacteria_R1.fastq` and `bacteria_R2.fastq` are your input files.
 
-The output files are...
-`bacteria_R1p.fastq` and `bacteria_R1u.fastq` (paired and unpaired)
+`ILLUMINACLIP:NexteraPE-PE.fa:2:20:10` is where the adapter sequences are stored that trimmomatic will look for in your data, along with some extra tweaks to the settings
+
+The output files are...\
+`bacteria_R1p.fastq` and `bacteria_R1u.fastq` (paired and unpaired)\
 `bacteria_R2p.fastq` and `bacteria_R2u.fastq` (paired and unpaired)
 
 The unpaired files can be deleted since they contain all the garbage reads, we just want the paired files.
+
+Now let's tidy things up:
+
+1. Make a folder called `raw_reads` and move your original files from NOW into this folder
+2. Make a folder called `trimmed_reads` and move your paired files from `trimmomatic` into this folder
+3. Remove the `.zip` files from fastqc
+4. Make a folder called `fastqc` and move your html files into this folder
