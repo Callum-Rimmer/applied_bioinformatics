@@ -218,4 +218,12 @@ What we're doing is trying to piece the sequencing reads into larger fragments c
 
 ![image](https://user-images.githubusercontent.com/72881801/202688417-8d9fdf14-2009-4ed4-b17c-0dd48dda76df.png)
 
+Once spades has finished assembling your genome, you will have a `contigs.fasta` file. This file contains all the contigs spades was able to piece the sequence reads into.
 
+Q.  Each contig begins with a header line containing all the information about that contig, starting with a greater than `>` symbol.\
+  a)  How can we view this file?\
+  b)  How could you extract all the header lines i.e. contig names and print them to the terminal?
+  
+Now we have our assembled genome, let's find out what species of bacteria it belongs to.
+
+You can upload your fasta file to [PubMLST](https://pubmlst.org/species-id), which uses ribosomal multi-locus sequence typing for species identification.
