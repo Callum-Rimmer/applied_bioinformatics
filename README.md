@@ -208,6 +208,14 @@ The program we are going to use to do this is called `spades`
 2. Activate the environment and install the program `spades`
 3. In your `workshop` folder, create a folder called `spades`
 
+Before we run `spades`, it might be sensible to set up a Tmux session. spades can take a little while to run, but with Tmux you can detach from your session and you don't have to worry about staying on the terminal with spades running. How do we set up a Tmux session?
+```
+tmux new -s genome_assembly
+```
+If you want to detach, press `CTRL+B` then press `d`
+
+To re-attach type `tmux a`
+
 Now we can run the main command:
 ```
 spades.py -1 trimmed_reads/bacteria_R1p.fastq -2 trimmed_reads/bacteria_R2p.fastq -o spades -t 4
