@@ -86,4 +86,58 @@ Another problem you may come across is that some older bioinformatics tools are 
 ```
 conda create -n environment_name python=python_version
 ```
+## Trying out a small workflow
 
+### Checking the quality of DNA sequencing data
+
+Now that you have an environment setup with fastqc, let's use it.
+
+Download the two sequence read files from NOW. The R1 file contains all the DNA sequencing data for the forward reads, R2 contains the data for the reverse reads. [Check out this webpage for more information.](https://www.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html)
+
+Make sure you have activated your fastqc environment.
+
+What commands do you need to use to move into your Downloads folder and then make a directory called `workshop`.
+
+Move your read files into the workshop folder.
+
+You can run `fastqc` on your read files by typing:
+```
+fastqc *.fastq -t 4 
+```
+Can you answer these questions:
+
+1. What does the `-t 4`mean
+2. What are we saying with `*.fastq`?
+3. How would you find out what parameters fastqc needs
+
+
+fastqc should output a html file per read file, you can view this with Firefox. You can find out more information about the statistics fastqc outputs by looking at the [project webpage.](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+
+The read quality checks out, so we can move onto the next step.
+
+### Double checking adapter sequences have been removed from our reads
+
+We add adapter sequences to our samples of DNA prior to sequencing so that the DNA binds to the flowcell in the sequencer, as you can see below.
+
+![image](https://user-images.githubusercontent.com/72881801/202675159-54f51a37-45d1-404d-8e68-a2b89bc0e7df.jpeg)
+
+We need to double check that the adapter sequences have been removed before doing any more analysis on the files.
+
+The program we are going to use is called `trimmomatic`.
+
+1. Create an environment called `trimmomatic`
+2. Activate this environment
+3. Install trimmomatic, using conda, in this environment
+
+Trimmomatic uses a few more parameters than fastqc. The command we are going to use is:
+```
+trimmomatic PE -threads 4 bacteria_R1.fastq bacteria_R2.fastq bacteria_R1p.fastq bacteria_R1u.fastq bacteria_R2p.fastq bacteria_R2u.fastq ILLUMINACLIP:NexteraPE-PE.fa:2:20:10
+```
+
+`bacteria_R1.fastq` and `bacteria_R2.fastq` are your input files
+
+The output files are...
+`bacteria_R1p.fastq` and `bacteria_R1u.fastq` (paired and unpaired)
+`bacteria_R2p.fastq` and `bacteria_R2u.fastq` (paired and unpaired)
+
+The unpaired files can be deleted since they contain all the garbage reads, we just want the paired files.
