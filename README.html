@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Applied Bioinformatics</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="applied-bioinformatics">Applied Bioinformatics</h1>
+<p>Commands that we have previously looked at:</p>
+<pre><code>ls
+cd
+pwd
+clear
+echo
+cowsay
+man
+cat
+head
+tail
+more
+less
+touch
+mkdir
+nano
+rm
+</code></pre>
+<p>There's a few more commands I want to cover: <code>cut</code>, <code>grep</code> and the pipe <code>|</code></p>
+<h4 id="cut">Cut</h4>
+<p>We can use the <code>cut</code> command to extract text from a file or an output from a command.</p>
+<p>Lets make a list of numbers using <code>echo</code> in comma-separated values format and direct that to a file:</p>
+<pre><code>echo &quot;a,b,c,d,e&quot; &gt; cut_example.txt
+</code></pre>
+<p>How can we print the contents of this file to the terminal?</p>
+<p>What if we only to extract the letter <code>c</code> from that file? We can use <code>cut</code> to do it.</p>
+<pre><code class="language-bash"><span class="hljs-built_in">cut</span> -f3 -d<span class="hljs-string">&#x27;,&#x27;</span> cut_example.txt
+</code></pre>
+<p><code>-f3</code> means we are extracting the 3rd field (column).<br>
+<code>-d','</code> is how we set the delimiter (what the columns are going to be separated by).</p>
+<p>So what we have said is break up the file into columns based on commas, then print the 3rd column.</p>
+<h4 id="grep">Grep</h4>
+<p>The <code>grep</code> command is a pattern searcher. You supply it with some text and it will search for that text in whatever file or command output you give it.</p>
+<p>Using the file you created for the <code>cut</code> command...</p>
+<pre><code class="language-bash">grep a cut_example.txt
+</code></pre>
+<p><code>grep</code> will output each line that contains a match to your query text.</p>
+<h4 id="the-pipe">The pipe</h4>
+<p><code>|</code> is used to direct the output of one command into another.</p>
+<p>One example is counting the number of files in a directory...</p>
+<pre><code>ls | wc -l
+</code></pre>
+<p><code>ls</code> will normally list the contents of a directory in the terminal.</p>
+<p>But if we pipe it into the word count command it will instead give us the number of lines the <code>ls</code> command printed i.e. the number of files/folders.</p>
+<h2 id="plan-for-today">Plan for today</h2>
+<p>One of the main ways we manage the vast array of programs you need to install is with a package manager. We are going to look at one today - this is what you will be using for your assessment.</p>
+<p>Each piece of software you use will have a number of required programs (called dependencies) that must be installed in order for the program to work. Dependencies from different programs can often conflict with one another, which will prevent you from running the software.</p>
+<p><img src="https://user-images.githubusercontent.com/72881801/202696960-655d33be-1e86-46f8-bd0e-c99be19e7609.jpg" alt="linux-package-manager-explanation copy"></p>
+<p>Using a package manager, it will install a program along with its dependencies and place this in an 'environment'. You can have as many environments as you like, each with a different program installed in it. You activate the environment that you wish to use, and you can then use that particular program. This way you will never run into problems with different software conflicting with each other.</p>
+<p><img src="https://user-images.githubusercontent.com/72881801/202698181-ccb6bbc3-c6c9-4733-9cfe-e47f06001546.png" alt="conda_logo"></p>
+<p>The package manager we are going to use is called Conda. This should already be installed on your virtual machines.</p>
+<p>Let's check Conda is working by typing...</p>
+<pre><code class="language-bash">conda --version
+</code></pre>
+<h4 id="creating-an-environment">Creating an environment</h4>
+<p>The first program we are going to install is called <code>fastqc</code>. This program allows you to check the quality of the data from a DNA sequencer.</p>
+<p>Before we install the program, we need to create an environment for it...</p>
+<pre><code>conda create -n fastqc
+</code></pre>
+<p>Now we need to turn on this environment...</p>
+<pre><code>conda activate fastqc
+</code></pre>
+<p>We're now in our <code>fastqc</code> environment. All we need to do now is install the program. Conda is also used for installing programs, not just managing environments.</p>
+<p>Conda installs programs by looking for them in <code>channels</code>. To see what <code>channels</code> your Conda setup is using, type the command:</p>
+<pre><code>conda config --show channels
+</code></pre>
+<p><code>Bioconda</code> should be one of them. This contains most of the programs you need for bioinformatics.</p>
+<p>Now we've checked we have the appropriate channels setup, we can install fastqc in our environment by running...</p>
+<pre><code>conda install fastqc
+</code></pre>
+<p>Now fastqc is installed in our fastqc environment. We can check this is installed by typing <code>conda list</code>.</p>
+<p>Let's check <code>fastqc</code> is working by typing <code>fastqc -h</code>, if it prints the help page the program is working.</p>
+<p>You can turn off your environment by typing <code>conda deactivate</code>.</p>
+<p>There are a few other conda commands which you need to know...</p>
+<p><code>conda config --add channels channel_name</code>          This adds a specific channel if the one you want isn't being used by default</p>
+<p><code>conda search program_name</code>                         This searches for a specific program and tells you whether you can install it</p>
+<p><code>conda info --envs</code>                                 This prints a list of all your environments</p>
+<p>There is a way you can bundle creating an environment and installing a program. Using the example of <code>fastqc</code>, you could instead type...</p>
+<pre><code>conda create -n fastqc fastqc
+</code></pre>
+<p>Where the syntax is <code>conda create -n environment_name program_name</code></p>
+<p>Another problem you may come across is that some older bioinformatics tools are designed to run on older versions of python. You can specify the version of python an environment is created with by typing...</p>
+<pre><code>conda create -n environment_name python=python_version
+</code></pre>
+<h2 id="trying-out-a-small-workflow">Trying out a small workflow</h2>
+<h3 id="checking-the-quality-of-dna-sequencing-data">Checking the quality of DNA sequencing data</h3>
+<p>Now that you have an environment setup with fastqc, let's use it.</p>
+<p>Download the two sequence read files from NOW. The R1 file contains all the DNA sequencing data for the forward reads, R2 contains the data for the reverse reads. <a href="https://www.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html">Check out this webpage for more information.</a></p>
+<p>Make sure you have activated your fastqc environment.</p>
+<p>What commands do you need to use to move into your Downloads folder and then make a directory called <code>workshop</code>.</p>
+<p>Move your read files into the workshop folder.</p>
+<p>You can run <code>fastqc</code> on your read files by typing:</p>
+<pre><code>fastqc *.fastq -t 4 
+</code></pre>
+<p>Can you answer these questions:</p>
+<ol>
+<li>What does the <code>-t 4</code>mean</li>
+<li>What are we saying with <code>*.fastq</code>?</li>
+<li>How would you find out what parameters fastqc needs</li>
+</ol>
+<p>fastqc should output a html file per read file, you can view this with Firefox. You can find out more information about the statistics fastqc outputs by looking at the <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">project webpage.</a></p>
+<p>The read quality checks out, so we can move onto the next step.</p>
+<h3 id="double-checking-adapter-sequences-have-been-removed-from-our-reads">Double checking adapter sequences have been removed from our reads</h3>
+<p>We add adapter sequences to our samples of DNA prior to sequencing so that the DNA binds to the flowcell in the sequencer, as you can see below.</p>
+<p><img src="https://user-images.githubusercontent.com/72881801/202675159-54f51a37-45d1-404d-8e68-a2b89bc0e7df.jpeg" alt="image"></p>
+<p>We need to double check that the adapter sequences have been removed before doing any more analysis on the files.</p>
+<p>The program we are going to use is called <code>trimmomatic</code>.</p>
+<ol>
+<li>Create an environment called <code>trimmomatic</code></li>
+<li>Activate this environment</li>
+<li>Install <code>trimmomatic</code>, using conda, in this environment</li>
+<li>Download the <code>NexteraPE-PE.fa</code> file from NOW and place this in your <code>workshop</code> directory</li>
+</ol>
+<p>Trimmomatic uses a few more parameters than fastqc. The command we are going to use is:</p>
+<pre><code>trimmomatic PE -threads 4 bacteria_R1.fastq bacteria_R2.fastq bacteria_R1p.fastq bacteria_R1u.fastq bacteria_R2p.fastq bacteria_R2u.fastq ILLUMINACLIP:NexteraPE-PE.fa:2:20:10
+</code></pre>
+<p><code>bacteria_R1.fastq</code> and <code>bacteria_R2.fastq</code> are your input files.</p>
+<p><code>ILLUMINACLIP:NexteraPE-PE.fa:2:20:10</code> is where the adapter sequences are stored that trimmomatic will look for in your data, along with some extra tweaks to the settings</p>
+<p>The output files are...<br>
+<code>bacteria_R1p.fastq</code> and <code>bacteria_R1u.fastq</code> (paired and unpaired)<br>
+<code>bacteria_R2p.fastq</code> and <code>bacteria_R2u.fastq</code> (paired and unpaired)</p>
+<p>The unpaired files can be deleted since they contain all the garbage reads, we just want the paired files.</p>
+<p>Now let's tidy things up:</p>
+<ol>
+<li>Make a folder called <code>raw_reads</code> and move your original files from NOW into this folder</li>
+<li>Make a folder called <code>trimmed_reads</code> and move your paired files from <code>trimmomatic</code> into this folder</li>
+<li>Remove the <code>.zip</code> files from fastqc</li>
+<li>Make a folder called <code>fastqc</code> and move your html files into this folder</li>
+</ol>
+<h3 id="assembling-the-genome">Assembling the genome</h3>
+<p>Now our read files have been quality checked and trimmed, we can assemble the reads into a complete genome.</p>
+<p>The program we are going to use to do this is called <code>spades</code></p>
+<ol>
+<li>Create an environment called <code>spades</code></li>
+<li>Activate the environment and install the program <code>spades</code></li>
+<li>In your <code>workshop</code> folder, create a folder called <code>spades</code></li>
+</ol>
+<p>Before we run <code>spades</code>, it might be sensible to set up a Tmux session. spades can take a little while to run, but with Tmux you can detach from your session and you don't have to worry about staying on the terminal with spades running. How do we set up a Tmux session?</p>
+<pre><code>tmux new -s genome_assembly
+</code></pre>
+<p>If you want to detach, press <code>CTRL+B</code> then press <code>d</code></p>
+<p>To re-attach type <code>tmux a</code></p>
+<p>Now we can run the main command:</p>
+<pre><code>spades.py -1 trimmed_reads/bacteria_R1p.fastq -2 trimmed_reads/bacteria_R2p.fastq -o spades -t 4
+</code></pre>
+<p>The <code>-1</code> flag is for your trimmed forward reads file.<br>
+The <code>-2</code> flag is for your trimmed reverse reads file.<br>
+The <code>-o</code> flag is the output folder<br>
+The <code>-t 4</code> flag is for using for CPU threads</p>
+<p>What we're doing is trying to piece the sequencing reads into larger fragments called contigs. The contigs then get stiched together to form the assembled genome.</p>
+<p><img src="https://user-images.githubusercontent.com/72881801/202688417-8d9fdf14-2009-4ed4-b17c-0dd48dda76df.png" alt="image"></p>
+<p>Once spades has finished assembling your genome, you will have a <code>contigs.fasta</code> file. This file contains all the contigs spades was able to piece the sequence reads into.</p>
+<p>Q.  Each contig begins with a header line containing all the information about that contig, starting with a greater than <code>&gt;</code> symbol.<br>
+a)  How can we view this file?<br>
+b)  How could you extract all the header lines i.e. contig names and print them to the terminal?</p>
+<h3 id="species-identification">Species identification</h3>
+<p>Now we have our assembled genome, let's find out what species of bacteria it belongs to.</p>
+<p>You can upload your fasta file to <a href="https://pubmlst.org/species-id">PubMLST</a>, which uses ribosomal multi-locus sequence typing for species identification.</p>
+<h3 id="searching-for-antibiotic-resistance-genes">Searching for antibiotic resistance genes</h3>
+<p>We can also upload our genome to the Comprehensive antibiotic-resistance gene database <a href="https://card.mcmaster.ca/analyze/rgi">(CARD)</a></p>
+<p>Does the genome encode any antibiotic resistance genes?</p>
+
+        
+        
+    </body>
+    </html>
